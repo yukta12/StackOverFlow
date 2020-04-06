@@ -12,5 +12,13 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // $this->call(UserSeeder::class);
+        factory(\App\User::class, 5)
+            ->create()
+            ->each(function ($user){
+               for($i = 0 ; $i <= rand(5,10); $i++){
+                   $user->questions()->create(factory(\App\Question::class)->make()->toArray());
+               }
+            });
+
     }
 }
