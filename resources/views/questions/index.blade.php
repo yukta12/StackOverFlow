@@ -11,7 +11,23 @@
                     @foreach($questions as $question)
                         <div class="card-body">
                             <div class="media">
+                                <div class="d-flex flex-column mr-4 statistics">
+                                    <div class="text-center mb-3">
+                                        <strong class="d-block"> {{ $question->votes_count }}</strong>
+                                        Votes
+                                    </div>
+                                    <div class="text-center mb-3 answers {{ $question->answers_styles }}">
+                                        <strong class="d-block"> {{ $question->answers_count }}</strong>
+                                        Answers
+                                    </div>
+                                    <div class="text-center">
+                                        <strong class="d-block"> {{ $question->views_count }}</strong>
+                                        Views
+                                    </div>
+
+                                </div>
                                 <div class="media-body">
+
                                     <h4><a href="{{ $question->url }}">{{$question->title}}</a></h4>
                                     <p> Asked By:
                                         <a href="#">{{ $question->owner->name }}</a>

@@ -10882,3 +10882,27 @@ a.text-dark:focus {
   }
 }
 
+.statistics strong {
+  font-size: 1.2em;
+}
+
+.statistics .answers {
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.statistics .answers.answered {
+  border: solid 1px #38c172;
+  color: #38c172;
+}
+
+.statistics .answers.unanswered {
+  background: #e3342f;
+  color: #fff;
+}
+
+.statistics .answers.has-best-answer {
+  background: #38c172;
+  color: #fff;
+}
+
