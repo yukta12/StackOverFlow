@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Questions\UpdateQuestionRequest;
 use App\Question;
 use App\Http\Requests\Questions\CreateQuestionRequest;
 use Illuminate\Http\Request;
@@ -10,7 +11,7 @@ class QuestionsController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth'])->only(['create','store']);
+        $this->middleware(['auth'])->except(['create','store','edit','update']);
 
     }
 
@@ -52,7 +53,7 @@ class QuestionsController extends Controller
             'body' => $request->body,
         ]);
 
-        session()->flash('Success','Question has been added successfully');
+        session()->flash('success','Question has been added successfully');
         return redirect(route('questions.index'));
     }
 
@@ -75,7 +76,7 @@ class QuestionsController extends Controller
      */
     public function edit(Question $question)
     {
-        //
+        return view('questions.edit',compact("question"));
     }
 
     /**
@@ -85,9 +86,15 @@ class QuestionsController extends Controller
      * @param  \App\Question  $question
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Question $question)
+    public function update(UpdateQuestionRequest $request, Question $question)
     {
-        //
+        $question->update([
+            "title" => $request->title,
+            "body" => $request->body,
+        ]);
+
+        session()->flash('success','Question has been Modified successfully');
+        return redirect(route('questions.index'));
     }
 
     /**
