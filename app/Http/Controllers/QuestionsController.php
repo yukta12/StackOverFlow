@@ -11,7 +11,7 @@ class QuestionsController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth'])->except(['create','store','edit','update']);
+        $this->middleware(['auth'])->except(['index','show']);
 
     }
 
