@@ -77,7 +77,10 @@ class QuestionsController extends Controller
      */
     public function edit(Question $question)
     {
-        return view('questions.edit',compact("question"));
+       if($this->authorize('update',$question)){
+           return view('questions.edit',compact("question"));
+       }
+       return abort(403,'access denied');
     }
 
     /**
@@ -89,13 +92,16 @@ class QuestionsController extends Controller
      */
     public function update(UpdateQuestionRequest $request, Question $question)
     {
-        $question->update([
-            "title" => $request->title,
-            "body" => $request->body,
-        ]);
+        if($this->authorize('update',$question)){
+            $question->update([
+                "title" => $request->title,
+                "body" => $request->body,
+            ]);
 
-        session()->flash('success','Question has been Modified successfully');
-        return redirect(route('questions.index'));
+            session()->flash('success','Question has been Modified successfully');
+            return redirect(route('questions.index'));
+        }
+        return abort('403','Access denied');
     }
 
     /**
@@ -106,8 +112,11 @@ class QuestionsController extends Controller
      */
     public function destroy(Question $question)
     {
-        $question->delete();
-        session()->flash('success','Question has been deleted successfully');
-        return redirect(route('questions.index'));
+        if($this->authorize('delete',$question)){
+            $question->delete();
+            session()->flash('success','Question has been deleted successfully');
+            return redirect(route('questions.index'));
+        }
+        return abort(403,'access denied');
     }
 }

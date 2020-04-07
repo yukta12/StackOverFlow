@@ -35,15 +35,21 @@
                                     <div class="d-flex justify-content-between">
                                         <h4><a href="{{ $question->url }}">{{$question->title}}</a></h4>
                                         <div class="d-flex flex-row">
-                                            <a href="{{route('questions.edit',$question->id)}}" class="btn btn-sm btn-outline-info mr-3">Edit</a>
-                                            <form action="{{ route('questions.destroy',$question->id) }}" method="post">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit"
-                                                        onclick="return confirm('are you sure you want to delete this?')"
-                                                        class="btn btn-sm btn-outline-danger"
-                                                > Delete</button>
-                                            </form>
+
+                                            @can('update',$question)
+                                                 <a href="{{route('questions.edit',$question->id)}}" class="btn btn-sm btn-outline-info mr-3">Edit</a>
+                                            @endcan
+
+                                            @can('delete',$question)
+                                                    <form action="{{ route('questions.destroy',$question->id) }}" method="post">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit"
+                                                                onclick="return confirm('are you sure you want to delete this?')"
+                                                                class="btn btn-sm btn-outline-danger"
+                                                        > Delete</button>
+                                                    </form>
+                                                @endcan
                                         </div>
                                     </div>
 
