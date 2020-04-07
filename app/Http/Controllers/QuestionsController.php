@@ -3,11 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Question;
+use App\Http\Requests\Questions\CreateQuestionRequest;
 use Illuminate\Http\Request;
 
 class QuestionsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth'])->only(['create','store']);
+
+    }
+
     /**
+     *
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -27,7 +35,8 @@ class QuestionsController extends Controller
      */
     public function create()
     {
-        //
+       // app('debugbar').disable();
+        return view('questions.create');
     }
 
     /**
@@ -36,9 +45,15 @@ class QuestionsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateQuestionRequest $request)
     {
-        //
+        auth()->user()->questions()->create([
+            'title' => $request->title,
+            'body' => $request->body,
+        ]);
+
+        session()->flash('Success','Question has been added successfully');
+        return redirect(route('questions.index'));
     }
 
     /**

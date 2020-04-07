@@ -5,6 +5,10 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
+
+                <div class="d-flex justify-content-end mb-3">
+                    <a href="{{ route('questions.create') }}" class="btn btn-outline-primary">Ask A Question</a>
+                </div>
                 <div class="card">
                     <div class="card-header">All Questions</div>
 
@@ -33,7 +37,7 @@
                                         <a href="#">{{ $question->owner->name }}</a>
                                         <span class="text-muted"> {{ $question->created_date }}</span>
                                     </p>
-                                    <p>{{ Str::limit($question->body,250) }}</p>
+                                    <p>{!! Str::limit($question->body,250) !!}</p>
                                 </div>
                             </div>
                         </div>
