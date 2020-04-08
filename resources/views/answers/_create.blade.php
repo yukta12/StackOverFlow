@@ -15,7 +15,7 @@
                         @enderror
                     </div>
                     <div class="form-group">
-                        <button type="submit" class="btn btn-outline-success">Post your answer</button>
+                        <button type="submit" class="btn btn-outline-primary">Post your answer</button>
                     </div>
 
 

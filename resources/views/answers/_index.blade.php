@@ -29,7 +29,7 @@
                             </div>
                         </div>
 
-                        <div class="ml-5">
+                        <div class="ml-5 flex-fill">
                             {!! $answer->body !!}
 
                             {{--                        to display user info of owner--}}
