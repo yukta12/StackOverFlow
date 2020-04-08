@@ -13,7 +13,7 @@ class CreateAnswerRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return auth()->check();
     }
 
     /**
@@ -24,7 +24,7 @@ class CreateAnswerRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'body'=>'required',
         ];
     }
 }
