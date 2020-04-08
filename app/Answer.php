@@ -13,6 +13,9 @@ class Answer extends Model
     public function author(){
         return $this->belongsTo(User::class,'user_id');
     }
+    public function getCreatedDateAttribute(){
+        return $this->created_at->diffForHumans();
+    }
 
     public static function boot()
     {
