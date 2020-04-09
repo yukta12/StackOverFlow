@@ -17,14 +17,7 @@ class Answer extends BaseModel
         return $this->created_at->diffForHumans();
     }
 
-    public static function boot()
-    {
-        parent::boot();
-        static::created(function ($answer){
-                $answer->question->increment('answers_count');
-        });
 
-    }
 
     public function getBestAnswerStatusAttribute(){
         if ($this->id === $this->question->best_answer_id)
@@ -37,6 +30,19 @@ class Answer extends BaseModel
     public function getIsBestAttribute()
     {
         return $this->id === $this->question->best_answer_id;
+    }
+
+//    EVENTS
+    public static function boot()
+    {
+        parent::boot();
+        static::created(function ($answer){
+            $answer->question->increment('answers_count');
+        });
+        static::deleted(function ($answer){
+            $answer->question->decrement('answers_count');
+        });
+
     }
 
 }

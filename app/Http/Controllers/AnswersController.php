@@ -88,9 +88,12 @@ class AnswersController extends Controller
      * @param  \App\Answer  $answer
      * @return Response
      */
-    public function destroy(Answer $answer)
+    public function destroy(Question $question, Answer $answer)
     {
-        //
+        $this->authorize('update',$answer);
+        $answer->delete();
+        session()->flash('success','Answer has been deleted successfully');
+        return redirect($question->url);
     }
 
     public function bestAnswer(Answer $answer)
@@ -98,4 +101,6 @@ class AnswersController extends Controller
         $answer->question->markBestAnswer($answer);
         return redirect()->back();
     }
+
+
 }
