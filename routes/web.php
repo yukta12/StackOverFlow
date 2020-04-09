@@ -24,10 +24,13 @@ Route::resource('questions','QuestionsController')->except('show');
 Route::get('questions/{slug}','QuestionsController@show')->name('questions.show');
 Route::resource('questions.answers','AnswersController')->except('show','index');
 Route::post('answers/{answer}/best-answer','AnswersController@bestAnswer')->name('answers.bestAnswer');
+Route::post('answers/{answer}/unmark-best-answer','AnswersController@unMarkBestAnswer')->name('answers.unMarkBestAnswer');
+
 
 Route::post('questions/{question}/favorite','FavoritesController@store')->name('questions.favorite');
 
 Route::delete('questions/{question}/unfavorite','FavoritesController@destroy')->name('questions.unfavorite');
+
 
 
 Route::post('questions/{question}/vote/{vote}','VotesController@voteQuestion')->name('questions.vote');

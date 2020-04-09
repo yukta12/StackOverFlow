@@ -85,8 +85,9 @@ class AnswersController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Answer  $answer
+     * @param \App\Answer $answer
      * @return Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function destroy(Question $question, Answer $answer)
     {
@@ -99,6 +100,12 @@ class AnswersController extends Controller
     public function bestAnswer(Answer $answer)
     {
         $answer->question->markBestAnswer($answer);
+        return redirect()->back();
+    }
+    public function unMarkBestAnswer(Answer $answer)
+    {
+        //dd("unmark");
+        $answer->question->unMarkBest($answer);
         return redirect()->back();
     }
 

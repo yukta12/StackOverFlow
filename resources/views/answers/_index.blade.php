@@ -48,7 +48,8 @@
 
                             <div class="mt-2">
                                 @can('markAsBest', $answer)
-                                    <form action="{{ route('answers.bestAnswer', $answer->id) }}" method="POST">
+                                    <form action="{{ route($answer->is_best ? 'answers.unMarkBestAnswer' :'answers.bestAnswer',$answer->id) }}" method="post">
+{{--                                    <form action="{{ route('answers.bestAnswer', $answer->id) }}" method="POST">--}}
                                         @csrf
                                         <button type="submit" class="btn {{ $answer->best_answer_status }}">
                                             <i class="fa fa-check fa-2x "></i>

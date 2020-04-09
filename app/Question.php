@@ -41,6 +41,11 @@ class Question extends BaseModel
         $this->best_answer_id = $answer->id;
         $this->save();
     }
+    public function unMarkBest(Answer $answer){
+        $this->best_answer_id = NULL;
+        $this->save();
+    }
+
 
     public function favorites(){
         return $this->belongsToMany(User::class)->withTimestamps();
