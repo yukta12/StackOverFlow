@@ -25,4 +25,18 @@ class Answer extends BaseModel
         });
 
     }
+
+    public function getBestAnswerStatusAttribute(){
+        if ($this->id === $this->question->best_answer_id)
+        {
+            return 'text-success';
+        }
+        return 'text-dark';
+    }
+
+    public function getIsBestAttribute()
+    {
+        return $this->id === $this->question->best_answer_id;
+    }
+
 }

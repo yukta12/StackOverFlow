@@ -92,4 +92,10 @@ class AnswersController extends Controller
     {
         //
     }
+
+    public function bestAnswer(Answer $answer)
+    {
+        $answer->question->markBestAnswer($answer);
+        return redirect()->back();
+    }
 }

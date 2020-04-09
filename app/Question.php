@@ -36,4 +36,9 @@ class Question extends BaseModel
         return $this->hasMany(Answer::class);
     }
 
+    public function markBestAnswer(Answer $answer){
+        $this->best_answer_id = $answer->id;
+        $this->save();
+    }
+
 }
