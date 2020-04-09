@@ -62,13 +62,15 @@
                                 </div>
                             </div>
                         </div>
+                        <hr>
                     @endforeach
 
-                    <br>
+
+                </div>
                     <div class="card-footer">
                         {{ $questions->links() }}
                     </div>
-                </div>
+
 
             </div>
         </div>
