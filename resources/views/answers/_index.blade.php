@@ -12,13 +12,38 @@
                     <div class="d-flex">
                         <div>
                             <div>
-                                <a href="#" title="Up Vote" class="d-block text-dark text-center">
-                                    <i class="fa fa-caret-up fa-3x"></i>
-                                </a>
+                                @auth
+                                    <form action="{{route('answers.vote',[$answer->id, 1])}}" method="POST">
+                                        @csrf
+                                        <button type="submit" class="btn {{auth()->user()->hasAnswerUpVote($answer) ? 'text-dark' : 'text-black-50'}}">
+                                            <i class="fa fa-caret-up fa-3x"></i>
+                                        </button>
+                                    </form>
+
+                                @else
+                                    <a href="{{route('login')}}" class="d-block text-black-50 text-center">
+                                        <i class="fa fa-caret-up fa-3x"></i>
+                                    </a>
+                                @endauth
+
                                 <h4 class="text-dark m-0 text-center"> {{ $answer->votes_count }}</h4>
-                                <a href="#" title="down Vote" class="d-block text-dark text-center">
-                                    <i class="fa fa-caret-down fa-3x"></i>
-                                </a>
+                                @auth
+                                    <form action="{{route('answers.vote',[$answer->id, -1])}}" method="POST">
+                                        @csrf
+                                        <button type="submit" class="btn {{auth()->user()->hasAnswerDownVote($answer) ? 'text-dark' : 'text-black-50'}}">
+                                            <i class="fa fa-caret-down fa-3x"></i>
+                                        </button>
+                                    </form>
+
+                                @else
+                                    <a href="{{route('login')}}" class="d-block text-black-50 text-center">
+                                        <i class="fa fa-caret-down fa-3x"></i>
+                                    </a>
+                                @endauth
+
+
+
+
                             </div>
 
                             <div class="mt-2">

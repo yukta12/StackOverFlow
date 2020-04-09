@@ -45,4 +45,43 @@ class Answer extends BaseModel
 
     }
 
+    /*
+     * Mappinig answer to user
+     */
+    public function votes(){
+        return $this->morphToMany(User::class,'vote')->withTimestamps();
+    }
+
+    /*
+     * inserting vote
+     */
+    public function vote(int $vote){
+        $this->votes()->attach(auth()->id(),['vote'=>$vote]);
+        if($vote < 0){
+            $this->decrement('votes_count');
+        }
+        else{
+            $this->increment('votes_count');
+        }
+    }
+    /*
+     * updating vote
+     */
+    public function updateVote(int $vote){
+        $this->votes()->updateExistingPivot(auth()->id(),['vote'=>$vote]);
+        if($vote < 0){
+            $this->decrement('votes_count');
+            $this->decrement('votes_count');
+        }
+        else{
+            $this->increment('votes_count');
+            $this->increment('votes_count');
+        }
+
+    }
+
+
+
+
+
 }

@@ -54,4 +54,52 @@ class User extends Authenticatable
         return $this->belongsToMany(Question::class)->withTimestamps();
     }
 
+        /*
+       * mapping polymorphic relationship
+       */
+
+
+    public function votesQuestion(){
+        return $this->morphedByMany(Question::class,'vote')->withTimestamps();
+    }
+    public function votesAnswers(){
+        return $this->morphedByMany(Answer::class,'vote')->withTimestamps();
+    }
+
+        /*
+        * To check question upvotes or downvote
+        */
+
+    public function hasQuestionUpVote(Question $question){
+        return $this->votesQuestion()->where(['vote'=>1,'vote_id'=>$question->id])->exists();
+    }
+    public function hasQuestionDownVote(Question $question){
+        return $this->votesQuestion()->where(['vote'=>-1,'vote_id'=>$question->id])->exists();
+    }
+
+    public function hasVoteForQuestion(Question $question){
+        return $this->hasQuestionDownVote($question) || $this->hasQuestionUpVote($question);
+    }
+
+
+    /*
+     * To check answer upvotes or downvote
+     */
+
+    public function hasAnswerUpVote(Answer $answer){
+        return $this->votesAnswers()->where(['vote'=>1,'vote_id'=>$answer->id])->exists();
+    }
+    public function hasAnswerDownVote(Answer $answer){
+        return $this->votesAnswers()->where(['vote'=>-1,'vote_id'=>$answer->id])->exists();
+    }
+
+    public function hasVoteForAnswer(Answer $answer){
+        return $this->hasAnswerUpVote($answer) || $this->hasAnswerDownVote($answer);
+    }
+
+
+
+
+
+
 }

@@ -17,13 +17,35 @@
                         <div class="d-flex justify-content-between">
                             <div class="d-flex">
                                 <div>
-                                    <a href="#" title="Up Vote" class="d-block text-dark text-center">
-                                        <i class="fa fa-caret-up fa-3x"></i>
-                                    </a>
+
+                                    @auth
+                                        <form action="{{route('questions.vote',[$question->id, 1])}}" method="POST">
+                                            @csrf
+                                            <button type="submit" class="btn {{auth()->user()->hasQuestionUpVote($question) ? 'text-dark' : 'text-black-50'}}">
+                                                <i class="fa fa-caret-up fa-3x"></i>
+                                            </button>
+                                        </form>
+
+                                    @else
+                                        <a href="{{route('login')}}" class="d-block text-black-50 text-center">
+                                            <i class="fa fa-caret-up fa-3x"></i>
+                                        </a>
+                                    @endauth
+
                                     <h4 class="text-dark m-0 text-center"> {{ $question->votes_count }}</h4>
-                                    <a href="#" title="down Vote" class="d-block text-dark text-center">
-                                        <i class="fa fa-caret-down fa-3x"></i>
-                                    </a>
+                                    @auth
+                                        <form action="{{route('questions.vote',[$question->id, -1])}}" method="POST">
+                                            @csrf
+                                            <button type="submit" class="btn {{auth()->user()->hasQuestionDownVote($question) ? 'text-dark' : 'text-black-50'}}">
+                                                <i class="fa fa-caret-down fa-3x"></i>
+                                            </button>
+                                        </form>
+
+                                    @else
+                                        <a href="{{route('login')}}" class="d-block text-black-50 text-center">
+                                            <i class="fa fa-caret-down fa-3x"></i>
+                                        </a>
+                                    @endauth
                                 </div>
 
                                 <div class="ml-5 mt-2 {{$question->is_favorite ? 'text-warning' : 'text-dark'}}">
