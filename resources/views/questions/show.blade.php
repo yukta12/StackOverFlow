@@ -26,13 +26,25 @@
                                     </a>
                                 </div>
 
-                                <div class="ml-5 mt-2">
-                                    <a href="#" title="Favorite" class="d-block text-dark text-center">
-                                        <i class="fa fa-star fa-2x"></i>
-                                    </a>
-                                    <h4 class="text-dark m-0">45</h4>
+                                <div class="ml-5 mt-2 {{$question->is_favorite ? 'text-warning' : 'text-dark'}}">
+                                    @can( 'markAsFavorite' ,$question)
+                                        <form action="{{route($question->is_favorite ? 'questions.unfavorite': 'questions.favorite',$question->id) }}" method="POST">
+                                            @if($question->is_favorite)
+                                                @method('DELETE')
+                                            @endif
+                                            @csrf
+                                            <button type="submit" class="btn {{$question->is_favorite ? 'text-warning' : 'text-dark'}}">
+                                                <i class="fa {{$question->is_favorite ? 'fa-star ' : 'fa-star-o'}} fa-2x "></i>
+                                            </button>
+                                            <h4 class="text-center m-0">{{$question->favorites_count}}</h4>
+                                        </form>
+                                    @else
+                                        <i class="fa fa-star-o fa-2x text-warning d-block"></i>
+                                        <h4 class="text-center text-warning m-0">{{$question->favorites_count}}</h4>
+                                    @endcan
+
                                 </div>
-                            </div>
+                                                </div>
                             <div class="d-flex flex-column">
                                 <div class="text-muted flex-column">
                                     Asked : {{ $question->created_date }}

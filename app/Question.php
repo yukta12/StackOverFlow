@@ -3,6 +3,7 @@
 namespace App;
 
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 class Question extends BaseModel
 {
@@ -39,6 +40,18 @@ class Question extends BaseModel
     public function markBestAnswer(Answer $answer){
         $this->best_answer_id = $answer->id;
         $this->save();
+    }
+
+    public function favorites(){
+        return $this->belongsToMany(User::class)->withTimestamps();
+    }
+
+    public function getFavoritesCountAttribute(){
+        return $this->favorites()->count();
+    }
+    public function getIsFavoriteAttribute(){
+        //checking current user marked it as fav or not
+        return $this->favorites()->where('user_id',Auth::id())->count() > 0;
     }
 
 }

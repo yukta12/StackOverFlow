@@ -50,4 +50,8 @@ class User extends Authenticatable
             return "https://ui-avatars.com/api/?name={$name}&rounded=true&size={$size}";
     }
 
+    public function favorites(){
+        return $this->belongsToMany(Question::class)->withTimestamps();
+    }
+
 }
