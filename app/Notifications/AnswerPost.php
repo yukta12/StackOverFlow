@@ -49,9 +49,9 @@ class AnswerPost extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->line('Your Question')
-                    ->line('' . $this->question . 'has a answer by ' . $this->answerBy)
-                    ->action('View Answer', url('/'.$this->answerLink));
+                    ->subject('New Answer Posted')
+                    ->line('Your Question - ' . $this->question . ' has a new answer by ' . $this->answerBy)
+                    ->action('Click to view Answer', url('/'.$this->answerLink));
 
     }
 
