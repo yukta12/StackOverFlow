@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Answer;
 use App\Http\Requests\Answers\CreateAnswerRequest;
+use App\Notifications\AnswerPost;
 use App\Question;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Notification;
 
 class AnswersController extends Controller
 {
@@ -36,6 +38,9 @@ class AnswersController extends Controller
         ]);
 
         session()->flash('success','Answer has been added successfully');
+        Notification::route('mail',''.$question->owner->email)
+                        ->notify(new AnswerPost($question->title,auth()->user()->name,$question->url));
+
         return redirect($question->url);
     }
 
